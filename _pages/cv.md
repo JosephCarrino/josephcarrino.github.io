@@ -11,54 +11,33 @@ redirect_from:
 
 Education
 ======
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
-* M.S. in Jekyll, GitHub University, 2014
-* B.S. in GitHub, GitHub University, 2012
+* Ph.D in Optimization, ENS Lyon, 2028 (expected)
+* M.S. in Artificial Intelligence, University of Bologna, 2025
+* B.S. in Computer Science, University of Bologna, 2022
 
 Work experience
 ======
-* Spring 2024: Academic Pages Collaborator
-  * GitHub University
-  * Duties includes: Updates and improvements to template
-  * Supervisor: The Users
 
-* Fall 2015: Research Assistant
-  * GitHub University
-  * Duties included: Merging pull requests
-  * Supervisor: Professor Hub
+* Spring 2025: **Research Intern**
+  * **ENS Lyon**, France
+  * Duties included: Newton and Quasi-Newton methods in mixed precision for Machine Learning and scientific computing;
+  * Supervisor: Elisa Riccietti, Theo Mary
 
-* Summer 2015: Research Assistant
-  * GitHub University
-  * Duties included: Tagging issues
-  * Supervisor: Professor Git
-  
-Skills
-======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 3
+* Fall 2024: **Software Development Engineer Intern**
+  * **Amazon Madrid**, Spain
+  * Duties included: Full-Stack developing using Java and React 
+  * Supervisor: Javier Campos Berga
+
+* Fall 2021: **Research Intern**
+  * **NTNU Gjøvik**, Norway
+  * Duties included: Python and SpaCy for quantitative semantic analysis on newspapers;
+  * Supervisor: Gioele Barabucci, Angelo Di Iorio
 
 Publications
 ======
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
-  
-Talks
-======
-  <ul>{% for post in site.talks reversed %}
-    {% include archive-single-talk-cv.html  %}
-  {% endfor %}</ul>
-  
-Teaching
-======
-  <ul>{% for post in site.teaching reversed %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Service and leadership
-======
-* Currently signed in to 43 different slack teams
+
+[Download full CV](https://josephcarrino.github.io/files/CV.pdf)
+    
