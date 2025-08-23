@@ -1,14 +1,12 @@
 ---
 permalink: /
-title: "Giuseppe Carrino / Website"
+title: "Welcome to my personal website!"
 author_profile: true
 redirect_from: 
   - /about/
   - /about.html
 ---
 
-Welcome to my personal website!
-======
 I am Giuseppe Carrino, but everybody calls me Joseph. In this website you will find different resources about me and my work.
 Currently I am _unemployed_ :pensive:. I will start my PhD at **ENS Lyon** in November 2025, supervised by [Nicolas Brisebarre](https://perso.ens-lyon.fr/nicolas.brisebarre/), [Elisa Riccietti](https://perso.ens-lyon.fr/elisa.riccietti/) and [Theo Mary](https://tmary.perso.lip6.fr/).
 
