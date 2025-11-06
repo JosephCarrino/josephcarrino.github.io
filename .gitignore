@@ -21,3 +21,4 @@ package-lock.json
 
 # Ignore generators venv
 markdown_generator/venv/
+.DS_Store

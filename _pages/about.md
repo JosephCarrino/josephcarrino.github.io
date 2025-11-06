@@ -8,7 +8,7 @@ redirect_from:
 ---
 
 I am Giuseppe Carrino, but everybody calls me Joseph. In this website you will find different resources about me and my work.
-Currently I am _unemployed_ :pensive:. I will start my PhD at **ENS Lyon** in November 2025, supervised by [Nicolas Brisebarre](https://perso.ens-lyon.fr/nicolas.brisebarre/), [Elisa Riccietti](https://perso.ens-lyon.fr/elisa.riccietti/) and [Theo Mary](https://tmary.perso.lip6.fr/).
+I am a PhD at **ENS Lyon** in November 2025, supervised by [Nicolas Brisebarre](https://perso.ens-lyon.fr/nicolas.brisebarre/), [Elisa Riccietti](https://perso.ens-lyon.fr/elisa.riccietti/) and [Theo Mary](https://tmary.perso.lip6.fr/).
 
 About my research
 ======
