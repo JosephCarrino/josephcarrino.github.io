@@ -22,8 +22,8 @@ What else?
 ======
 Nothing much! But I love watching movies - especially if old and italian - and playing the guitar, already setting-up a rock band in Lyon if you want to join :grin:.
 
----
-<h2>Posts</h2>
+
+<h1>Posts</h1>
 {% for post in site.posts %}
   {% include archive-single.html %}
 {% endfor %}
