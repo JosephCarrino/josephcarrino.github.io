@@ -9,9 +9,9 @@
 # Basic Site Settings
 locale                   : "en-US"
 site_theme               : "default" # Currently available options are "default", "air"
-title                    : "Joseph Carrino / Website"
+title                    : "Giuseppe Carrino / Website"
 title_separator          : "-"
-name                     : &name "Joseph Carrino"
+name                     : &name "Giuseppe Carrino"
 description              : &description "PhD candidate at ENS Lyon. Working on Optimization methods in finite precision."
 url                      : https://josephcarrino.github.io # the base hostname & protocol for your site e.g. "https://[your GitHub username].github.io" or if you already have some other page hosted on Github then use "https://[your GitHub username].github.io/[Your Repo Name]"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
@@ -23,7 +23,7 @@ repository               : "JosephCarrino/josephcarrino.github.io"
 author:
   # Biographic information
   avatar           : "profile.jpg"
-  name             : "Joseph Carrino"
+  name             : "Giuseppe Carrino"
   pronouns         : "he/him"  
   bio              : "PhD candidate at ENS Lyon. Working on Optimization methods in mixed precision."
   location         : "Lyon, France"
@@ -84,6 +84,8 @@ publication_category:
     title: 'Journal Articles'    
   conferences:
     title: 'Conference Papers'
+  thesis:
+    title: 'Thesis'
 
 # Site Settings
 teaser                   :  # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"

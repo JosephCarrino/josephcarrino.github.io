@@ -1,6 +1,6 @@
 ---
 title: "IFrugality in second-order optimization: floating-point approximations for Newton's method"
-category: manuscripts
+category: thesis
 collection: publications
 permalink: /publication/2025-01-01-Investigating-news-coverage-and-circulation-over-time-in-a-quantitative-manner-the-TARO-framework
 date: 2025-07-10
