@@ -6,4 +6,4 @@ tags:
   - publications
 ---
 
-You can find my master thesis at https://hal.science/tel-05375552.
+You can find my master thesis at [https://hal.science/tel-05375552](https://hal.science/tel-05375552).
