@@ -24,6 +24,8 @@ Nothing much! But I love watching movies - especially if old and italian - and p
 
 
 <h1>Posts</h1>
+---
 {% for post in site.posts %}
   {% include archive-single.html %}
+---
 {% endfor %}
