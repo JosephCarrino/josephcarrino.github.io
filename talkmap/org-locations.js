@@ -1,22 +1,12 @@
 var addressPoints = [
   [
-    "Talk 2 on Relevant Topic in Your Field<br />London School of Testing; London, UK",
-    51.4893335,
-    -0.14405508452768728
+    "Poster on 'Mixed-Precision Newton's method' at SIAM Chapters Meeting<br />SIAM Chapters meeting for Young Researchers; PoliMi, Milan, Italy",
+    45.4790288,
+    9.2322104
   ],
   [
-    "Tutorial 1 on Relevant Topic in Your Field<br />UC-Berkeley Institute for Testing Science; Berkeley, CA, USA",
-    37.8708393,
-    -122.272863
-  ],
-  [
-    "Conference Proceeding talk 3 on Relevant Topic in Your Field<br />Testing Institute of America 2014 Annual Conference; Los Angeles, CA, USA",
-    34.0536909,
-    -118.242766
-  ],
-  [
-    "Talk 1 on Relevant Topic in Your Field<br />UC San Francisco, Department of Testing; San Francisco, CA, USA",
-    37.7792588,
-    -122.4193286
+    "Poster on 'Mixed-Precision Newton's method' at M2L<br />M2L Summer School; University of Split, Split, Croatia",
+    43.5117478,
+    16.4676015
   ]
 ];
