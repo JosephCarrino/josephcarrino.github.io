@@ -1,0 +1,1022 @@
+---
+layout: default
+title: "Pokémon Squad Builder"
+permalink: /pokemon-squad/
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokémon Squad Builder – Shining Diamond</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0b0c1a;
+    --surface: #13152a;
+    --surface2: #1a1d38;
+    --surface3: #22264a;
+    --accent: #e63946;
+    --accent2: #457b9d;
+    --gold: #f4a261;
+    --text: #e8e9f3;
+    --text-muted: #7c7fa8;
+    --text-dim: #4a4d72;
+    --border: #2a2f5e;
+    --border-light: #3a3f6e;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --glow: 0 0 24px rgba(230,57,70,0.15);
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* BG grid texture */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(69,123,157,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(69,123,157,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app-wrap { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* ── Header ── */
+  .header {
+    display: flex; align-items: center; gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-logo {
+    width: 52px; height: 52px; flex-shrink: 0;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    box-shadow: 0 0 32px rgba(230,57,70,0.4);
+    position: relative;
+  }
+  .header-logo::after {
+    content: '';
+    position: absolute; top: 50%; left: 0; right: 0;
+    height: 2px; background: rgba(0,0,0,0.4);
+    transform: translateY(-50%);
+  }
+  .header-inner::before {
+    content: '';
+    position: absolute; bottom: 50%; left: 0; right: 0; height: 2px;
+    background: rgba(255,255,255,0.3);
+  }
+  .header-text h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1.6rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  .header-text h1 span { color: var(--accent); }
+  .header-text p { color: var(--text-muted); font-size: 0.875rem; margin-top: 2px; }
+  .game-badge {
+    margin-left: auto;
+    background: linear-gradient(135deg, #2a5ca8, #1a3a7c);
+    border: 1px solid #3a6abf;
+    color: #a8c4f0;
+    font-size: 0.75rem; font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* ── Layout ── */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media(max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Panels ── */
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+  .panel-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .panel-title::before {
+    content: '';
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    flex-shrink: 0;
+  }
+
+  /* ── Search bar ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: var(--text-muted); font-size: 16px; pointer-events: none;
+  }
+  .search-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    padding: 11px 14px 11px 40px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .search-input::placeholder { color: var(--text-dim); }
+  .search-input:focus {
+    border-color: var(--accent2);
+    box-shadow: 0 0 0 3px rgba(69,123,157,0.15);
+  }
+
+  /* ── Type filter pills ── */
+  .filter-row {
+    display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.2rem;
+  }
+  .type-pill {
+    font-size: 0.72rem; font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    user-select: none;
+  }
+  .type-pill:hover { transform: translateY(-1px); filter: brightness(1.15); }
+  .type-pill.active { border-color: white; filter: brightness(1.1); }
+
+  /* Type colors */
+  .t-normal   { background: #9a9a7a; color: #fff; }
+  .t-fire     { background: #f08030; color: #fff; }
+  .t-water    { background: #6890f0; color: #fff; }
+  .t-electric { background: #f8d030; color: #222; }
+  .t-grass    { background: #78c850; color: #fff; }
+  .t-ice      { background: #98d8d8; color: #333; }
+  .t-fighting { background: #c03028; color: #fff; }
+  .t-poison   { background: #a040a0; color: #fff; }
+  .t-ground   { background: #e0c068; color: #333; }
+  .t-flying   { background: #a890f0; color: #fff; }
+  .t-psychic  { background: #f85888; color: #fff; }
+  .t-bug      { background: #a8b820; color: #fff; }
+  .t-rock     { background: #b8a038; color: #fff; }
+  .t-ghost    { background: #705898; color: #fff; }
+  .t-dragon   { background: #7038f8; color: #fff; }
+  .t-dark     { background: #705848; color: #fff; }
+  .t-steel    { background: #b8b8d0; color: #333; }
+
+  /* ── Pokémon grid ── */
+  .pokemon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .pokemon-grid::-webkit-scrollbar { width: 4px; }
+  .pokemon-grid::-webkit-scrollbar-track { background: transparent; }
+  .pokemon-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .poke-card {
+    background: var(--surface2);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 8px 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+    text-align: center;
+    user-select: none;
+  }
+  .poke-card:hover { border-color: var(--border-light); background: var(--surface3); transform: translateY(-2px); }
+  .poke-card.selected { border-color: var(--accent2); background: rgba(69,123,157,0.1); }
+  .poke-card.starred { border-color: var(--gold) !important; }
+
+  .poke-card img {
+    width: 64px; height: 64px;
+    image-rendering: pixelated;
+    display: block; margin: 0 auto 4px;
+  }
+  .poke-card .poke-name {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .poke-card .poke-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem; color: var(--text-dim);
+    margin-bottom: 6px;
+  }
+  .poke-types { display: flex; gap: 3px; justify-content: center; flex-wrap: wrap; }
+  .poke-types .type-pill { font-size: 0.58rem; padding: 2px 6px; }
+
+  .star-btn {
+    position: absolute; top: 5px; right: 6px;
+    background: none; border: none; cursor: pointer;
+    font-size: 13px; line-height: 1;
+    color: var(--text-dim);
+    transition: all 0.15s;
+    padding: 2px;
+  }
+  .star-btn:hover { color: var(--gold); transform: scale(1.2); }
+  .poke-card.starred .star-btn { color: var(--gold); }
+
+  .poke-check {
+    position: absolute; top: 5px; left: 6px;
+    width: 16px; height: 16px;
+    border: 1.5px solid var(--border-light);
+    border-radius: 4px;
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+  }
+  .poke-card.selected .poke-check {
+    background: var(--accent2);
+    border-color: var(--accent2);
+    color: white;
+  }
+
+  /* Level input */
+  .level-input-wrap { margin-top: 6px; }
+  .level-input-wrap input {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 6px;
+    text-align: center;
+    outline: none;
+  }
+  .level-input-wrap input:focus { border-color: var(--accent2); }
+  .level-input-wrap label { font-size: 0.58rem; color: var(--text-dim); display: block; margin-bottom: 2px; }
+
+  /* Selection summary bar */
+  .selection-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    margin-top: 1rem;
+  }
+  .selection-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+  .selection-count strong { color: var(--accent2); }
+  .btn-suggest {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    padding: 9px 20px;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.02em;
+  }
+  .btn-suggest:hover { background: #ff4f5e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(230,57,70,0.35); }
+  .btn-suggest:disabled { background: var(--surface3); color: var(--text-dim); cursor: not-allowed; transform: none; box-shadow: none; }
+
+  /* ── Right panel: suggestions ── */
+  .suggestion-panel { position: sticky; top: 1.5rem; }
+
+  .squad-slot {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+    animation: slideIn 0.3s ease both;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(12px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .squad-slot:hover { border-color: var(--border-light); }
+  .squad-slot.starred-slot { border-color: var(--gold); background: rgba(244,162,97,0.06); }
+
+  .squad-slot img { width: 52px; height: 52px; image-rendering: pixelated; flex-shrink: 0; }
+  .squad-info { flex: 1; min-width: 0; }
+  .squad-name { font-weight: 600; font-size: 0.9rem; }
+  .squad-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+  .squad-types { display: flex; gap: 4px; margin-top: 4px; }
+  .squad-num { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
+
+  /* Score bar */
+  .score-section { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .score-label { font-size: 0.72rem; color: var(--text-muted); width: 110px; flex-shrink: 0; }
+  .score-bar-wrap { flex: 1; background: var(--surface3); border-radius: 4px; height: 6px; overflow: hidden; }
+  .score-bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+  .score-val { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-muted); width: 32px; text-align: right; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center; padding: 2.5rem 1rem;
+    color: var(--text-dim);
+  }
+  .empty-state .eball { font-size: 3rem; margin-bottom: 0.75rem; opacity: 0.3; }
+  .empty-state p { font-size: 0.85rem; line-height: 1.6; }
+
+  /* No results */
+  .no-results {
+    grid-column: 1 / -1;
+    text-align: center; padding: 2rem;
+    color: var(--text-dim); font-size: 0.85rem;
+  }
+
+  /* Alternative squads tabs */
+  .alt-tabs {
+    display: flex; gap: 6px; margin-bottom: 1rem; margin-top: 0.75rem;
+  }
+  .alt-tab {
+    flex: 1; font-size: 0.72rem; font-weight: 600;
+    padding: 7px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--text-muted); border-radius: var(--radius-sm);
+    cursor: pointer; transition: all 0.15s; text-align: center;
+    font-family: 'Outfit', sans-serif;
+  }
+  .alt-tab:hover { border-color: var(--border-light); color: var(--text); }
+  .alt-tab.active { background: var(--accent2); border-color: var(--accent2); color: white; }
+
+  /* Coverage grid */
+  .coverage-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;
+    margin-top: 0.75rem;
+  }
+  .coverage-cell {
+    border-radius: 5px; padding: 4px 2px;
+    text-align: center; font-size: 0.6rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.03em;
+    opacity: 0.5; transition: opacity 0.3s;
+  }
+  .coverage-cell.covered { opacity: 1; }
+
+  /* Tooltip */
+  .tooltip { position: relative; }
+  .tooltip:hover::after {
+    content: attr(data-tip);
+    position: absolute; bottom: 120%; left: 50%; transform: translateX(-50%);
+    background: var(--surface3); border: 1px solid var(--border);
+    color: var(--text); font-size: 0.7rem;
+    padding: 4px 8px; border-radius: 5px; white-space: nowrap;
+    z-index: 10; pointer-events: none;
+  }
+
+  .badge-star { color: var(--gold); margin-left: 4px; }
+
+  /* Loading spinner */
+  .spinner {
+    display: inline-block; width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    margin-right: 6px; vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .clear-btn {
+    background: none; border: 1px solid var(--border);
+    color: var(--text-muted); border-radius: var(--radius-sm);
+    font-size: 0.75rem; padding: 5px 12px;
+    cursor: pointer; font-family: 'Outfit', sans-serif;
+    transition: all 0.15s;
+  }
+  .clear-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hint {
+    font-size: 0.75rem; color: var(--text-dim);
+    text-align: center; margin-top: 0.5rem;
+  }
+</style>
+</head>
+<body>
+<div class="app-wrap">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-logo" style="font-size:24px;">⬤</div>
+    <div class="header-text">
+      <h1>Pokémon <span>Squad</span> Builder</h1>
+      <p>Find your optimal team composition based on type coverage &amp; levels</p>
+    </div>
+    <div class="game-badge">✦ Shining Diamond</div>
+  </div>
+
+  <div class="main-grid">
+    <!-- Left: Pokémon picker -->
+    <div>
+      <div class="panel">
+        <div class="panel-title">Your Pokédex — Add your Pokémon</div>
+
+        <!-- Search -->
+        <div class="search-wrap">
+          <span class="search-icon">⌕</span>
+          <input class="search-input" id="searchInput" type="text" placeholder="Search by name or Pokédex number…" oninput="filterPokemon()">
+        </div>
+
+        <!-- Type filters -->
+        <div class="filter-row" id="typeFilters"></div>
+
+        <!-- Pokémon grid -->
+        <div class="pokemon-grid" id="pokeGrid"></div>
+
+        <!-- Selection bar -->
+        <div class="selection-bar">
+          <div>
+            <div class="selection-count">Selected: <strong id="selCount">0</strong> Pokémon</div>
+            <div class="hint">★ Star to lock a Pokémon into suggestions</div>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="clear-btn" onclick="clearAll()">Clear all</button>
+            <button class="btn-suggest" id="suggestBtn" onclick="buildSquads()" disabled>
+              Suggest Best Squads →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Suggestions -->
+    <div class="suggestion-panel">
+      <div class="panel">
+        <div class="panel-title">Best Squad</div>
+        <div id="squadOutput">
+          <div class="empty-state">
+            <div class="eball">◎</div>
+            <p>Select at least 6 Pokémon from your collection, then click <em>Suggest Best Squads</em> to get type-optimized team recommendations.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA: Sinnoh Pokédex (Shining Diamond) ──
+// 150 Pokemon representative of the Sinnoh dex
+const SINNOH_DEX = [
+  {id:387,name:"Turtwig",types:["grass"]},
+  {id:388,name:"Grotle",types:["grass"]},
+  {id:389,name:"Torterra",types:["grass","ground"]},
+  {id:390,name:"Chimchar",types:["fire"]},
+  {id:391,name:"Monferno",types:["fire","fighting"]},
+  {id:392,name:"Infernape",types:["fire","fighting"]},
+  {id:393,name:"Piplup",types:["water"]},
+  {id:394,name:"Prinplup",types:["water"]},
+  {id:395,name:"Empoleon",types:["water","steel"]},
+  {id:396,name:"Starly",types:["normal","flying"]},
+  {id:397,name:"Staravia",types:["normal","flying"]},
+  {id:398,name:"Staraptor",types:["normal","flying"]},
+  {id:399,name:"Bidoof",types:["normal"]},
+  {id:400,name:"Bibarel",types:["normal","water"]},
+  {id:401,name:"Kricketot",types:["bug"]},
+  {id:402,name:"Kricketune",types:["bug"]},
+  {id:403,name:"Shinx",types:["electric"]},
+  {id:404,name:"Luxio",types:["electric"]},
+  {id:405,name:"Luxray",types:["electric"]},
+  {id:406,name:"Budew",types:["grass","poison"]},
+  {id:407,name:"Roserade",types:["grass","poison"]},
+  {id:408,name:"Cranidos",types:["rock"]},
+  {id:409,name:"Rampardos",types:["rock"]},
+  {id:410,name:"Shieldon",types:["rock","steel"]},
+  {id:411,name:"Bastiodon",types:["rock","steel"]},
+  {id:412,name:"Burmy",types:["bug"]},
+  {id:413,name:"Wormadam",types:["bug","grass"]},
+  {id:414,name:"Mothim",types:["bug","flying"]},
+  {id:415,name:"Combee",types:["bug","flying"]},
+  {id:416,name:"Vespiquen",types:["bug","flying"]},
+  {id:417,name:"Pachirisu",types:["electric"]},
+  {id:418,name:"Buizel",types:["water"]},
+  {id:419,name:"Floatzel",types:["water"]},
+  {id:420,name:"Cherubi",types:["grass"]},
+  {id:421,name:"Cherrim",types:["grass"]},
+  {id:422,name:"Shellos",types:["water"]},
+  {id:423,name:"Gastrodon",types:["water","ground"]},
+  {id:424,name:"Ambipom",types:["normal"]},
+  {id:425,name:"Drifloon",types:["ghost","flying"]},
+  {id:426,name:"Drifblim",types:["ghost","flying"]},
+  {id:427,name:"Buneary",types:["normal"]},
+  {id:428,name:"Lopunny",types:["normal"]},
+  {id:429,name:"Mismagius",types:["ghost"]},
+  {id:430,name:"Honchkrow",types:["dark","flying"]},
+  {id:431,name:"Glameow",types:["normal"]},
+  {id:432,name:"Purugly",types:["normal"]},
+  {id:433,name:"Chingling",types:["psychic"]},
+  {id:434,name:"Stunky",types:["poison","dark"]},
+  {id:435,name:"Skuntank",types:["poison","dark"]},
+  {id:436,name:"Bronzor",types:["steel","psychic"]},
+  {id:437,name:"Bronzong",types:["steel","psychic"]},
+  {id:438,name:"Bonsly",types:["rock"]},
+  {id:439,name:"Mime Jr.",types:["psychic"]},
+  {id:440,name:"Happiny",types:["normal"]},
+  {id:441,name:"Chatot",types:["normal","flying"]},
+  {id:442,name:"Spiritomb",types:["ghost","dark"]},
+  {id:443,name:"Gible",types:["dragon","ground"]},
+  {id:444,name:"Gabite",types:["dragon","ground"]},
+  {id:445,name:"Garchomp",types:["dragon","ground"]},
+  {id:446,name:"Munchlax",types:["normal"]},
+  {id:447,name:"Riolu",types:["fighting"]},
+  {id:448,name:"Lucario",types:["fighting","steel"]},
+  {id:449,name:"Hippopotas",types:["ground"]},
+  {id:450,name:"Hippowdon",types:["ground"]},
+  {id:451,name:"Skorupi",types:["poison","bug"]},
+  {id:452,name:"Drapion",types:["poison","dark"]},
+  {id:453,name:"Croagunk",types:["poison","fighting"]},
+  {id:454,name:"Toxicroak",types:["poison","fighting"]},
+  {id:455,name:"Carnivine",types:["grass"]},
+  {id:456,name:"Finneon",types:["water"]},
+  {id:457,name:"Lumineon",types:["water"]},
+  {id:458,name:"Mantyke",types:["water","flying"]},
+  {id:459,name:"Snover",types:["grass","ice"]},
+  {id:460,name:"Abomasnow",types:["grass","ice"]},
+  {id:461,name:"Weavile",types:["dark","ice"]},
+  {id:462,name:"Magnezone",types:["electric","steel"]},
+  {id:463,name:"Lickilicky",types:["normal"]},
+  {id:464,name:"Rhyperior",types:["ground","rock"]},
+  {id:465,name:"Tangrowth",types:["grass"]},
+  {id:466,name:"Electivire",types:["electric"]},
+  {id:467,name:"Magmortar",types:["fire"]},
+  {id:468,name:"Togekiss",types:["normal","flying"]},
+  {id:469,name:"Yanmega",types:["bug","flying"]},
+  {id:470,name:"Leafeon",types:["grass"]},
+  {id:471,name:"Glaceon",types:["ice"]},
+  {id:472,name:"Gliscor",types:["ground","flying"]},
+  {id:473,name:"Mamoswine",types:["ice","ground"]},
+  {id:474,name:"Porygon-Z",types:["normal"]},
+  {id:475,name:"Gallade",types:["psychic","fighting"]},
+  {id:476,name:"Probopass",types:["rock","steel"]},
+  {id:477,name:"Dusknoir",types:["ghost"]},
+  {id:478,name:"Froslass",types:["ice","ghost"]},
+  {id:479,name:"Rotom",types:["electric","ghost"]},
+  {id:480,name:"Uxie",types:["psychic"]},
+  {id:481,name:"Mesprit",types:["psychic"]},
+  {id:482,name:"Azelf",types:["psychic"]},
+  {id:483,name:"Dialga",types:["steel","dragon"]},
+  {id:484,name:"Palkia",types:["water","dragon"]},
+  // Plus classic Sinnoh-accessible pokémon
+  {id:1,name:"Bulbasaur",types:["grass","poison"]},
+  {id:4,name:"Charmander",types:["fire"]},
+  {id:6,name:"Charizard",types:["fire","flying"]},
+  {id:7,name:"Squirtle",types:["water"]},
+  {id:9,name:"Blastoise",types:["water"]},
+  {id:25,name:"Pikachu",types:["electric"]},
+  {id:26,name:"Raichu",types:["electric"]},
+  {id:39,name:"Jigglypuff",types:["normal","fairy"]},
+  {id:52,name:"Meowth",types:["normal"]},
+  {id:54,name:"Psyduck",types:["water"]},
+  {id:55,name:"Golduck",types:["water"]},
+  {id:58,name:"Growlithe",types:["fire"]},
+  {id:59,name:"Arcanine",types:["fire"]},
+  {id:63,name:"Abra",types:["psychic"]},
+  {id:65,name:"Alakazam",types:["psychic"]},
+  {id:66,name:"Machop",types:["fighting"]},
+  {id:68,name:"Machamp",types:["fighting"]},
+  {id:74,name:"Geodude",types:["rock","ground"]},
+  {id:76,name:"Golem",types:["rock","ground"]},
+  {id:79,name:"Slowpoke",types:["water","psychic"]},
+  {id:80,name:"Slowbro",types:["water","psychic"]},
+  {id:81,name:"Magnemite",types:["electric","steel"]},
+  {id:82,name:"Magneton",types:["electric","steel"]},
+  {id:90,name:"Shellder",types:["water"]},
+  {id:91,name:"Cloyster",types:["water","ice"]},
+  {id:92,name:"Gastly",types:["ghost","poison"]},
+  {id:94,name:"Gengar",types:["ghost","poison"]},
+  {id:95,name:"Onix",types:["rock","ground"]},
+  {id:96,name:"Drowzee",types:["psychic"]},
+  {id:102,name:"Exeggcute",types:["grass","psychic"]},
+  {id:104,name:"Cubone",types:["ground"]},
+  {id:108,name:"Lickitung",types:["normal"]},
+  {id:109,name:"Koffing",types:["poison"]},
+  {id:111,name:"Rhyhorn",types:["ground","rock"]},
+  {id:112,name:"Rhydon",types:["ground","rock"]},
+  {id:113,name:"Chansey",types:["normal"]},
+  {id:114,name:"Tangela",types:["grass"]},
+  {id:115,name:"Kangaskhan",types:["normal"]},
+  {id:116,name:"Horsea",types:["water"]},
+  {id:118,name:"Goldeen",types:["water"]},
+  {id:120,name:"Staryu",types:["water"]},
+  {id:121,name:"Starmie",types:["water","psychic"]},
+  {id:122,name:"Mr. Mime",types:["psychic","fairy"]},
+  {id:124,name:"Jynx",types:["ice","psychic"]},
+  {id:125,name:"Electabuzz",types:["electric"]},
+  {id:126,name:"Magmar",types:["fire"]},
+  {id:127,name:"Pinsir",types:["bug"]},
+  {id:128,name:"Tauros",types:["normal"]},
+  {id:131,name:"Lapras",types:["water","ice"]},
+  {id:133,name:"Eevee",types:["normal"]},
+  {id:134,name:"Vaporeon",types:["water"]},
+  {id:135,name:"Jolteon",types:["electric"]},
+  {id:136,name:"Flareon",types:["fire"]},
+  {id:137,name:"Porygon",types:["normal"]},
+  {id:142,name:"Aerodactyl",types:["rock","flying"]},
+  {id:143,name:"Snorlax",types:["normal"]},
+  {id:147,name:"Dratini",types:["dragon"]},
+  {id:149,name:"Dragonite",types:["dragon","flying"]},
+  {id:151,name:"Mew",types:["psychic"]},
+  {id:196,name:"Espeon",types:["psychic"]},
+  {id:197,name:"Umbreon",types:["dark"]},
+  {id:197,name:"Umbreon",types:["dark"]},
+  {id:227,name:"Skarmory",types:["steel","flying"]},
+  {id:248,name:"Tyranitar",types:["rock","dark"]},
+  {id:249,name:"Lugia",types:["psychic","flying"]},
+  {id:250,name:"Ho-Oh",types:["fire","flying"]},
+  {id:257,name:"Blaziken",types:["fire","fighting"]},
+  {id:260,name:"Swampert",types:["water","ground"]},
+  {id:282,name:"Gardevoir",types:["psychic","fairy"]},
+  {id:302,name:"Sableye",types:["dark","ghost"]},
+  {id:306,name:"Aggron",types:["steel","rock"]},
+  {id:330,name:"Flygon",types:["ground","dragon"]},
+  {id:359,name:"Absol",types:["dark"]},
+  {id:373,name:"Salamence",types:["dragon","flying"]},
+  {id:376,name:"Metagross",types:["steel","psychic"]},
+  {id:380,name:"Latias",types:["dragon","psychic"]},
+  {id:381,name:"Latios",types:["dragon","psychic"]},
+  {id:382,name:"Kyogre",types:["water"]},
+  {id:383,name:"Groudon",types:["ground"]},
+  {id:384,name:"Rayquaza",types:["dragon","flying"]},
+  {id:385,name:"Jirachi",types:["steel","psychic"]},
+];
+
+// Deduplicate by id
+const POKEDEX = [...new Map(SINNOH_DEX.map(p => [p.id, p])).values()];
+
+const TYPES = ["normal","fire","water","electric","grass","ice","fighting","poison","ground","flying","psychic","bug","rock","ghost","dragon","dark","steel"];
+
+// Type effectiveness chart (attacker → [super effective against])
+const TYPE_SUPER_EFFECTIVE = {
+  normal: [],
+  fire: ["grass","ice","bug","steel"],
+  water: ["fire","ground","rock"],
+  electric: ["water","flying"],
+  grass: ["water","ground","rock"],
+  ice: ["grass","ground","flying","dragon"],
+  fighting: ["normal","ice","rock","dark","steel"],
+  poison: ["grass","fairy"],
+  ground: ["fire","electric","poison","rock","steel"],
+  flying: ["grass","fighting","bug"],
+  psychic: ["fighting","poison"],
+  bug: ["grass","psychic","dark"],
+  rock: ["fire","ice","flying","bug"],
+  ghost: ["psychic","ghost"],
+  dragon: ["dragon"],
+  dark: ["psychic","ghost"],
+  steel: ["ice","rock","fairy"],
+  fairy: ["fighting","dragon","dark"]
+};
+
+// State
+let selected = new Map(); // id → {pokemon, level, starred}
+let activeTypes = new Set();
+let squads = [];
+let currentSquadIdx = 0;
+
+// ── Init ──
+function init() {
+  renderTypeFilters();
+  renderGrid();
+}
+
+function renderTypeFilters() {
+  const wrap = document.getElementById('typeFilters');
+  const allPill = document.createElement('span');
+  allPill.className = 'type-pill active';
+  allPill.style.background = '#2a2f5e';
+  allPill.style.color = '#a0a8d8';
+  allPill.style.border = '1.5px solid #4a5090';
+  allPill.textContent = 'ALL';
+  allPill.dataset.type = '';
+  allPill.onclick = () => { activeTypes.clear(); document.querySelectorAll('.type-pill').forEach(p=>p.classList.remove('active')); allPill.classList.add('active'); renderGrid(); };
+  wrap.appendChild(allPill);
+
+  TYPES.forEach(t => {
+    const pill = document.createElement('span');
+    pill.className = `type-pill t-${t}`;
+    pill.textContent = t;
+    pill.dataset.type = t;
+    pill.onclick = () => toggleTypeFilter(t, pill, allPill);
+    wrap.appendChild(pill);
+  });
+}
+
+function toggleTypeFilter(type, pill, allPill) {
+  if (activeTypes.has(type)) { activeTypes.delete(type); pill.classList.remove('active'); }
+  else { activeTypes.add(type); pill.classList.add('active'); }
+  allPill.classList.toggle('active', activeTypes.size === 0);
+  renderGrid();
+}
+
+function filterPokemon() { renderGrid(); }
+
+function getFilteredPokemon() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  return POKEDEX.filter(p => {
+    const matchQ = !q || p.name.toLowerCase().includes(q) || String(p.id).includes(q);
+    const matchT = activeTypes.size === 0 || p.types.some(t => activeTypes.has(t));
+    return matchQ && matchT;
+  });
+}
+
+function renderGrid() {
+  const grid = document.getElementById('pokeGrid');
+  grid.innerHTML = '';
+  const list = getFilteredPokemon();
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="no-results">No Pokémon match your search.</div>';
+    return;
+  }
+
+  list.forEach(p => {
+    const sel = selected.has(p.id);
+    const starred = sel && selected.get(p.id).starred;
+    const card = document.createElement('div');
+    card.className = `poke-card${sel ? ' selected' : ''}${starred ? ' starred' : ''}`;
+    card.id = `card-${p.id}`;
+
+    const imgSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`;
+
+    card.innerHTML = `
+      <div class="poke-check">${sel ? '✓' : ''}</div>
+      <button class="star-btn tooltip" data-tip="Lock into squad" onclick="toggleStar(event,${p.id})">★</button>
+      <img src="${imgSrc}" alt="${p.name}" loading="lazy" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2264%22 height=%2264%22><text y=%2244%22 font-size=%2248%22>◎</text></svg>'">
+      <div class="poke-num">#${String(p.id).padStart(3,'0')}</div>
+      <div class="poke-name">${p.name}</div>
+      <div class="poke-types">${p.types.map(t=>`<span class="type-pill t-${t}">${t}</span>`).join('')}</div>
+      ${sel ? `<div class="level-input-wrap"><label>Lv.</label><input type="number" min="1" max="100" value="${selected.get(p.id).level||50}" onchange="setLevel(${p.id},this.value)" onclick="event.stopPropagation()"></div>` : ''}
+    `;
+    card.addEventListener('click', () => toggleSelect(p));
+    grid.appendChild(card);
+  });
+}
+
+function toggleSelect(p) {
+  if (selected.has(p.id)) {
+    selected.delete(p.id);
+  } else {
+    selected.set(p.id, { pokemon: p, level: 50, starred: false });
+  }
+  updateUI();
+}
+
+function toggleStar(e, id) {
+  e.stopPropagation();
+  if (!selected.has(id)) {
+    const p = POKEDEX.find(x => x.id === id);
+    selected.set(id, { pokemon: p, level: 50, starred: true });
+  } else {
+    const entry = selected.get(id);
+    entry.starred = !entry.starred;
+  }
+  updateUI();
+}
+
+function setLevel(id, val) {
+  if (selected.has(id)) selected.get(id).level = Math.min(100, Math.max(1, parseInt(val)||50));
+}
+
+function clearAll() {
+  selected.clear();
+  updateUI();
+  document.getElementById('squadOutput').innerHTML = `<div class="empty-state"><div class="eball">◎</div><p>Select at least 6 Pokémon from your collection, then click <em>Suggest Best Squads</em>.</p></div>`;
+}
+
+function updateUI() {
+  const count = selected.size;
+  document.getElementById('selCount').textContent = count;
+  document.getElementById('suggestBtn').disabled = count < 6;
+  renderGrid();
+}
+
+// ── Squad building algorithm ──
+function computeTypeCoverage(team) {
+  const covered = new Set();
+  team.forEach(entry => {
+    entry.pokemon.types.forEach(t => {
+      (TYPE_SUPER_EFFECTIVE[t] || []).forEach(weak => covered.add(weak));
+    });
+  });
+  return covered.size;
+}
+
+function computeTypeDefense(team) {
+  // Count unique defensive types (more variety = better)
+  const defTypes = new Set();
+  team.forEach(entry => entry.pokemon.types.forEach(t => defTypes.add(t)));
+  return defTypes.size;
+}
+
+function computeAvgLevel(team) {
+  return team.reduce((sum, e) => sum + (e.level || 50), 0) / team.length;
+}
+
+function computeDiversity(team) {
+  const types = new Set();
+  team.forEach(e => e.pokemon.types.forEach(t => types.add(t)));
+  return types.size;
+}
+
+function scoreTeam(team) {
+  const coverage = computeTypeCoverage(team);
+  const defense = computeTypeDefense(team);
+  const level = computeAvgLevel(team);
+  const diversity = computeDiversity(team);
+  const starCount = team.filter(e => e.starred).length;
+  return coverage * 10 + defense * 5 + (level / 10) + diversity * 8 + starCount * 3;
+}
+
+function buildSquads() {
+  const btn = document.getElementById('suggestBtn');
+  btn.innerHTML = '<span class="spinner"></span>Building squads…';
+  btn.disabled = true;
+
+  setTimeout(() => {
+    const pool = Array.from(selected.values());
+    const starred = pool.filter(e => e.starred);
+    const nonStarred = pool.filter(e => !e.starred);
+
+    if (pool.length < 6) { btn.textContent = 'Suggest Best Squads →'; btn.disabled = false; return; }
+
+    // Generate candidate teams
+    const candidates = [];
+    const needed = Math.max(0, 6 - starred.length);
+
+    // If starred > 6, only use top 6 starred
+    const lockedStars = starred.slice(0, 6);
+    const freeSlots = 6 - lockedStars.length;
+    const freePool = nonStarred;
+
+    // Generate combos
+    const combos = getCombinations(freePool, freeSlots);
+    combos.forEach(combo => {
+      const team = [...lockedStars, ...combo];
+      candidates.push({ team, score: scoreTeam(team) });
+    });
+
+    candidates.sort((a, b) => b.score - a.score);
+    squads = candidates.slice(0, 3);
+    currentSquadIdx = 0;
+
+    renderSquad();
+    btn.innerHTML = 'Suggest Best Squads →';
+    btn.disabled = false;
+  }, 400);
+}
+
+function getCombinations(arr, k) {
+  if (k === 0) return [[]];
+  if (arr.length < k) return [];
+  // Limit for performance
+  const limit = 800;
+  const results = [];
+  function helper(start, current) {
+    if (current.length === k) { results.push([...current]); return; }
+    if (results.length >= limit) return;
+    for (let i = start; i < arr.length; i++) {
+      current.push(arr[i]);
+      helper(i + 1, current);
+      current.pop();
+    }
+  }
+  helper(0, []);
+  return results;
+}
+
+function renderSquad() {
+  const out = document.getElementById('squadOutput');
+  if (!squads.length) return;
+
+  const s = squads[currentSquadIdx];
+  const team = s.team;
+  const coverage = computeTypeCoverage(team);
+  const diversity = computeDiversity(team);
+  const avgLvl = computeAvgLevel(team);
+
+  // Coverage detail
+  const coveredTypes = new Set();
+  team.forEach(e => e.pokemon.types.forEach(t => { (TYPE_SUPER_EFFECTIVE[t]||[]).forEach(w => coveredTypes.add(w)); }));
+
+  let html = '';
+
+  // Tabs if multiple squads
+  if (squads.length > 1) {
+    html += '<div class="alt-tabs">';
+    squads.forEach((sq, i) => {
+      html += `<div class="alt-tab${i===currentSquadIdx?' active':''}" onclick="switchSquad(${i})">Squad ${i+1}${i===0?' ✦':''}</div>`;
+    });
+    html += '</div>';
+  }
+
+  // Team slots
+  team.forEach((entry, idx) => {
+    const p = entry.pokemon;
+    const imgSrc = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`;
+    const isStarred = entry.starred;
+    html += `
+      <div class="squad-slot${isStarred?' starred-slot':''}" style="animation-delay:${idx*0.05}s">
+        <img src="${imgSrc}" alt="${p.name}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2252%22 height=%2252%22><text y=%2240%22 font-size=%2240%22>◎</text></svg>'">
+        <div class="squad-info">
+          <div class="squad-name">${p.name}${isStarred?'<span class="badge-star">★</span>':''}</div>
+          <div class="squad-sub">Lv. ${entry.level} · #${String(p.id).padStart(3,'0')}</div>
+          <div class="squad-types">${p.types.map(t=>`<span class="type-pill t-${t}">${t}</span>`).join('')}</div>
+        </div>
+      </div>`;
+  });
+
+  // Scores
+  const maxCov = TYPES.length;
+  html += `
+    <div class="score-section">
+      <div class="panel-title" style="margin-bottom:0.75rem;">Team Analysis</div>
+      <div class="score-row">
+        <div class="score-label">Type Coverage</div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${Math.round(coverage/maxCov*100)}%;background:#457b9d;"></div></div>
+        <div class="score-val">${coverage}/${maxCov}</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Type Diversity</div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${Math.round(diversity/12*100)}%;background:#e63946;"></div></div>
+        <div class="score-val">${diversity}/12</div>
+      </div>
+      <div class="score-row">
+        <div class="score-label">Avg. Level</div>
+        <div class="score-bar-wrap"><div class="score-bar" style="width:${avgLvl}%;background:#f4a261;"></div></div>
+        <div class="score-val">${Math.round(avgLvl)}</div>
+      </div>
+    </div>`;
+
+  // Coverage map
+  html += `
+    <div style="margin-top:1rem;">
+      <div class="panel-title" style="margin-bottom:0.5rem;">Coverage map</div>
+      <div class="coverage-grid">`;
+  TYPES.forEach(t => {
+    html += `<div class="coverage-cell t-${t}${coveredTypes.has(t)?' covered':''}">${t}</div>`;
+  });
+  html += `</div><div class="hint" style="margin-top:6px;">Bright = super-effective coverage ✓</div></div>`;
+
+  out.innerHTML = html;
+}
+
+function switchSquad(idx) {
+  currentSquadIdx = idx;
+  renderSquad();
+}
+
+init();
+</script>
+</body>
+</html>
