@@ -422,10 +422,7 @@ author_profile: true
 </div>
 
 <script>
-// ─── COMPLETE POKÉDEX ───
-// All 151 Sinnoh-native + full National Dex accessible in Shining Diamond
 const RAW_DEX = [
-  // ── Sinnoh starters & dex ──
   {id:387,name:"Turtwig",types:["grass"]},
   {id:388,name:"Grotle",types:["grass"]},
   {id:389,name:"Torterra",types:["grass","ground"]},
@@ -532,7 +529,6 @@ const RAW_DEX = [
   {id:490,name:"Manaphy",types:["water"]},
   {id:491,name:"Darkrai",types:["dark"]},
   {id:492,name:"Shaymin",types:["grass"]},
-  // ── Gen 1 ──
   {id:1,name:"Bulbasaur",types:["grass","poison"]},
   {id:2,name:"Ivysaur",types:["grass","poison"]},
   {id:3,name:"Venusaur",types:["grass","poison"]},
@@ -684,7 +680,6 @@ const RAW_DEX = [
   {id:149,name:"Dragonite",types:["dragon","flying"]},
   {id:150,name:"Mewtwo",types:["psychic"]},
   {id:151,name:"Mew",types:["psychic"]},
-  // ── Gen 2 ──
   {id:152,name:"Chikorita",types:["grass"]},
   {id:153,name:"Bayleef",types:["grass"]},
   {id:154,name:"Meganium",types:["grass"]},
@@ -785,7 +780,6 @@ const RAW_DEX = [
   {id:249,name:"Lugia",types:["psychic","flying"]},
   {id:250,name:"Ho-Oh",types:["fire","flying"]},
   {id:251,name:"Celebi",types:["psychic","grass"]},
-  // ── Gen 3 ──
   {id:252,name:"Treecko",types:["grass"]},
   {id:253,name:"Grovyle",types:["grass"]},
   {id:254,name:"Sceptile",types:["grass"]},
@@ -938,11 +932,9 @@ const TYPE_SE = {
   steel:["ice","rock","fairy"],fairy:["fighting","dragon","dark"]
 };
 
-// Sprite: raw GitHub — works on all domains, no CORS restrictions
 function sprite(id){ return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`; }
 const FALLBACK = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%232a2f5e' stroke='%234a4d72' stroke-width='2'/%3E%3Ccircle cx='32' cy='32' r='10' fill='%234a4d72'/%3E%3Crect x='4' y='30' width='56' height='4' fill='%234a4d72'/%3E%3C/svg%3E`;
 
-// State
 const selected = new Map();
 const activeTypes = new Set();
 let squads = [], squadIdx = 0;
@@ -1042,7 +1034,6 @@ function updateUI(){
   renderGrid();
 }
 
-// ── Algorithm ──
 function covSet(team){const s=new Set();team.forEach(e=>e.pokemon.types.forEach(t=>(TYPE_SE[t]||[]).forEach(w=>s.add(w))));return s;}
 function divCount(team){const s=new Set();team.forEach(e=>e.pokemon.types.forEach(t=>s.add(t)));return s.size;}
 function avgLvl(team){return team.reduce((a,e)=>a+(e.level||50),0)/team.length;}
