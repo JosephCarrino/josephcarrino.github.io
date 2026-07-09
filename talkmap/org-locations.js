@@ -1,6 +1,6 @@
 var addressPoints = [
   [
-    "Presentation at SIAM OP26<br />PEQUAN Team meeting; University of Edinburgh, Edinburgh, UK",
+    "Presentation at SIAM OP26<br />SIAM OP26; University of Edinburgh, Edinburgh, UK",
     55.9440765,
     -3.1883736
   ],
