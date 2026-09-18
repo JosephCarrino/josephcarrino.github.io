@@ -12,5 +12,7 @@ Practical sessions for M1 students of ENS Lyon, for the Optimization course
 --- 
 ## Topics covered
 - Lesson 1: functions (strict) convexity, descent directions;
-- Lesson 2: Gradient and Newton's method. [TP here](https://josephcarrino.github.io/files/TD_optim_26/notebooks/TP2.ipynb).
+- Lesson 2: Gradient and Newton's method. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/notebooks/TP2.ipynb" download>
+  TP here.
+</a>
 - Lesson n: ...
