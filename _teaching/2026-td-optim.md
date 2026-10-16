@@ -24,4 +24,7 @@ Practical sessions for M1 students of ENS Lyon, for the Optimization course
 - Lesson 5: Least-squares problems and Gauss-Newton method. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/notebooks/TP5.zip" download>
   TP here.
 </a>
+- Lesson 6: Constrained optimization. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/notebooks/TP6.zip" download>
+  TP here.
+</a>
 - Lesson n: ...
