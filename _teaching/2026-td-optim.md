@@ -27,4 +27,7 @@ Practical sessions for M1 students of ENS Lyon, for the Optimization course
 - Lesson 6: Constrained optimization. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/notebooks/TP6.zip" download>
   TP here.
 </a>
+- Lesson 7: Introduction to Linear Programming: formalization, standard form and solving by drawing. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/TD7.pdf" download>
+  Solved exercises here.
+</a>
 - Lesson n: ...
