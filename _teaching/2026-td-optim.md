@@ -30,5 +30,5 @@ Practical sessions for M1 students of ENS Lyon, for the Optimization course
 - Lesson 7: Introduction to Linear Programming: formalization, standard form and solving by drawing. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/TD7.pdf" download>
   Solved exercises here.
 </a>
-- Lesson 8: Simplex method. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/TD8.pdf" download>
+- Lesson 8: Simplex method. <a href="https://raw.githubusercontent.com/josephcarrino/josephcarrino.github.io/master/files/TD_optim_26/TD8.pdf" download> TD here. </a>
 - Lesson n: ...
